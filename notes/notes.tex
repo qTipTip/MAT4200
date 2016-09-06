@@ -1,0 +1,320 @@
+\documentclass{article}
+
+\usepackage[]{amsmath, amsthm, amssymb} 
+\usepackage[]{faktor} 
+\usepackage[]{cleveref} 
+\usepackage[]{color} 
+\usepackage[]{eufrak} 
+\usepackage[]{enumerate} 
+
+\theoremstyle{definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{claim}{Claim}
+\newtheorem*{exercise}{Exercise}
+
+\title{Notes MAT4200 \\
+Commutative Algebra}
+\author{Ivar Stangeby}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Various propositions and claims}
+\label{sec:various_propositions_and_claims}
+
+\begin{claim}
+	\label{clm:inverse_ideal} If $f\colon A \to B$ is a ring
+	homomorphism, and suppose $J \subseteq B$ is an ideal in $B$, then
+	$f^{-1}\left( J \right)$ is an ideal in $A$.			
+\end{claim}
+\begin{prop}[Ideal correspondence]
+	There is a one-to-one , order preserving correspondence, between
+	ideals $J$ of $A$ containing $I$, and the ideals $\bar{J}$ of $A /
+	I$, given by $\bar{J} = f^{-1}\left( \bar{J} \right)$.
+\end{prop}
+
+\begin{proof}
+	Let $J$ be an ideal containing $I$. We want to show that $f(J)$ is
+	an ideal of $A / I$, that is, $yf(J) \subseteq f(J)$ for all $y
+	\in A / I$. Assume that $y = c + I$ for some $c \in A$. Pick any
+	$j + I \in f(J)$. Then
+	\begin{equation}
+		\notag
+		y(j + I) = (c + I)(j + I)= cj + I
+	\end{equation}
+	with $c \in A$, $j \in J$. So $cj \in J$ since $J$ is an ideal. We
+	therefore have $cj + I \in f(J)$ and consequently, $yf(J) \subseteq
+	f(J)$.
+
+	Now let $\bar{J}$ be an ideal in $A / I$. By \Cref{clm:inverse_ideal}, $f^{-1}(\bar{J})$ is an
+	ideal in $A$. All ideals contain $0$, so $0_{A / I} \in \bar{J}$. It
+	then follows that
+	\begin{equation}
+		\notag
+		f^{-1}\left(0_{A / I}\right) = \Ker f = I \subseteq
+		f^{-1}(\bar{J}).
+	\end{equation}
+	So the ideal $f^{-1}(\bar{J})$ contains the ideal $I$.
+
+	We now show that the map $f$ is a one-to-one correspondence.  We do
+	this by showing $f(f^{-1}(\bar{J})) = \bar{J}$ and $f^{-1}(f(J)) = J$.
+	Note that
+	\begin{align*}
+		\notag
+		f(f^{-1}(\bar{J})) = f\left(\left\{ a \in A \mid f(a) \in \bar{J} \right\} \right) = \bar{J}.
+	\end{align*}
+
+	Now, let $a \in J$. Then $f(a) = a + I \in f(J)$, so $a \in
+	f^{-1}(f(J))$ by definition.
+	For the opposite inclusion, note that
+	\begin{align*}
+		\notag
+		f^{-1}(f(J)) &= \left\{ a \in A \mid f(a) \in f(J) \right\} \\
+		&= \left\{ a \in A \mid a + I \in f(J) \right\}.
+	\end{align*}
+	Chose $a + I \in f(J)$. Then $a + I = a' + I$ for some $a' \in J$. We
+	do not yet know whether $a = a'$, just that they represent the same
+	coset. By the definition of coset equality we have $a - a' = c \in I$.
+	Therefore, $a = c + a'$. Since $c \in I \subseteq J$ and $a' \in J$, we
+	have $a \in J$ since $J$ is abelian group under addition. We have
+	therefore shown the inclusion $f^{-1}f(J)) \subseteq J$.  Consequently,
+	$f$ is a one-to-one correspondence between ideals in $A$ containing $I$
+	and ideals in $A/I$.
+\end{proof}
+
+\section{Exercises}
+\label{sec:exercises_chapter_1}
+
+\subsection*{Chapter 1}
+\label{sub:chapter_1}
+
+
+
+\begin{exercise}[1]
+	Assume that $x$ is nilpotent, and that $1 + x$ is \emph{not} a
+	unit in $A$. Hence, $1 + x$ is contained in a maximal ideal
+	$\mathfrak{m}$. Since any maximal ideal is prime, and $x$ is
+	nilpotent, we have $x^n = 0 \in \mathfrak{m} \implies x \in
+	\mathfrak{m}$. Any ideal is an additive subgroup, so $1 \in
+	\mathfrak{m}$ which contradicts the fact that $\mathfrak{m}$ is
+	maximal.
+
+	Now assume $u$ a unit and $x$ nilpotent. Assume for the sake of
+	contradiction that $u + x$ is \emph{not} a unit in $A$. Then $u +
+	x$ is contained in a maximal ideal $\mathfrak{m}$. Since $x$ is
+	nilpotent we have $x \in \mathfrak{m}$, hence $u \in \mathfrak{m}$
+	so $\mathfrak{m} = (1)$, again contradicting the fact that
+	$\mathfrak{m}$ is maximal.
+\end{exercise}
+
+\begin{exercise}[4]
+	We want to show that in $A[x]$ we have $\mathfrak{N} =
+	\mathfrak{R}$. We have trivially that $\mathfrak{N} \subseteq
+	\mathfrak{R}$, so we only need to show the opposite inclusion.
+
+	Let $f \in \mathfrak{R}$ with $f = \sum^{n}_{i=0} a_ix^i$, so by
+	proposition 1.9 we have $1 - fg$ a unit for all $g \in A[x]$. Let
+	$g = x$ be an element in $A[x]$. Then the function
+	\begin{equation}
+		\notag
+		1 - a_0x - a_1x^2 - \ldots - a_nx^{n+1}
+	\end{equation}
+	is a unit in $A[x]$. By exercise 1.2.(i) we have that $a_0, \ldots
+	,a_n$ are nilpotent in $A$. By exercise 1.2.(ii) we have that $f$
+	is nilpotent, so $f \in \mathfrak{N}$. Hence $\mathfrak{N} =
+	\mathfrak{R}$.
+\end{exercise}
+
+\begin{exercise}[6]
+	Let $A$ be a ring such that any ideal not contained in
+	$\mathfrak{N}$ contains a non-zero idempotent element. We want to
+	show that the nilradical and the Jacobson radical coincide in this
+	case. We have the inclusion $\mathfrak{N} \subseteq \mathfrak{R}$
+	trivially. For the opposite inclusion we argue contrapositively.
+	Let $c \notin \mathfrak{N}$. Then $(c) \not \subseteq
+	\mathfrak{N}$. By assumption, $(c)$ contains an idempotent element
+	$a = cx$ for some $x \in A$. We wish to use proposition 1.9 again.
+	Consider the element $1 - a$, and note that $a(1 - a) = a - a =
+	0$, so $1 - a$ is \emph{not} a unit in $A$ since it is a zero
+	divisor. By proposition 1.9 we have $a \notin \mathfrak{N}$, so
+	$(c) \not \subseteq \mathfrak{N}$. Consequently, $\mathfrak{R}
+	\subseteq \mathfrak{N}$.
+\end{exercise}
+
+\begin{exercise}[7] Let $A$ be a ring in which every element satisfies
+	$x^n = x$ for some $n \geq 2$ dependent on $x$. We want to show
+	that the nilradical $\mathfrak{N}$ and the Jacobson radical
+	$\mathfrak{R}$ coincide.  The inclusion $\mathfrak{N} \subseteq
+	\mathfrak{R}$ is trivial as any maximal ideal is prime. We show
+	the opposite inclusion by a contrapositive argument.
+
+	Assume that $x \notin \mathfrak{N}$. Our plan is to show that $1 -
+	xg$ is \emph{not} a unit for any $g \in A$. Consider the element
+	$1 - x \cdot x^{n-2}$. This is a zero divisor as shown by
+	multiplying by $x$ from the left. Hence $1 - xg$ is \emph{not} a
+	unit with $g = x^{n-2}$. By proposition 1.9 we then have $x \notin
+	\mathfrak{R}$. This shows contrapositively that $\mathfrak{R} =
+	\mathfrak{N}$.
+
+	\textcolor{red!30}{Note that I did not prove that every prime
+	ideal $\mathfrak{p}$ is also a maximal ideal as the exercise
+	requested. Trying again below.}
+	
+	We seek to show that any prime ideal $\mathfrak{p}$ of $A$ is
+	maximal. Let $\varphi : A \to A / \mathfrak{p}$ be the canonical
+	homomorphism. Let $x \in A$ be any element. We know that $x^n = x$
+	for some $n$. Let $\bar{x} = \varphi(x) \in A / \mathfrak{p}$.
+	Note that $\bar{x} = \bar{x}^n$. Since $A / \mathfrak{p}$ is an
+	integral domain due to $\mathfrak{p}$ being prime, we know that
+	the cancellation law for multiplication holds. So $\bar{x}^n = 1
+	x$ implies that $\bar{x}^{n-1} = 1$. So, $\bar{x}$ has
+	inverse $\bar{x}^{n-2}$. Hence, $A / \mathfrak{p}$ is a field,
+	which implies that $\mathfrak{p}$ is a maximal ideal.
+\end{exercise}
+
+\begin{exercise}[8] Let $A$ be a non-zero ring. We wish to show that the
+	set of prime ideals of $A$ has a minimal element with respect to
+	set inclusion.  This can be solved by an application of Zorn's
+	Lemma. 	Let $\Sigma$ denote the set of all prime ideals of $A$.
+	Let $\mathfrak{q} \leq \mathfrak{p}$ if $\mathfrak{p} \subseteq
+	\mathfrak{q}$ (note the reverse inclusion).  This set is partially
+	ordered with respect to this relation. We need to show that any
+	chain $\Gamma$ in $\Sigma$ has an upper bound in $\Sigma$.  Let
+	$\mathfrak{P} = \bigcap_{\alpha} \mathfrak{p}_\alpha$. We claim
+	that the intersection of all prime ideals $\mathfrak{P}$ is an
+	element of $\Sigma$ and an upper bound for $\Gamma$.
+
+	Let $xy \in \mathfrak{P}$. Then $xy$ is an element of every prime
+	ideal $\mathfrak{p}_\alpha$ in the chain $\Gamma$.  Assume now
+	that $x \notin \mathfrak{P}$. In this case we need to show that $y
+	\in \mathfrak{P}$. Let $\mathfrak{p}_i$ be a prime ideal not
+	containing $x$. It therefore contains $y$ instead. Since $\Gamma$
+	is totally ordered, we can consider all the elements
+	$\mathfrak{p}_i \leq \mathfrak{p}'$, i.e., $\mathfrak{p}'
+	\subseteq \mathfrak{p}_i$. Since $x \notin \mathfrak{p}_i$ we have
+	$x \notin \mathfrak{p}'$. It then follows that all such
+	$\mathfrak{p}'$ must contain $y$. 
+
+	Consider now the elements $\mathfrak{p}' \geq \mathfrak{p}_i$,
+	that is $\mathfrak{p}_i \subseteq \mathfrak{p}'$. Since $y \in
+	\mathfrak{p}_i$ we have $y \in \mathfrak{p}'$. Consequently, we
+	have $y$ in all prime ideals, hence also in $\mathfrak{P}$. This
+	shows that $\mathfrak{P}$ is an element of $\Sigma$.
+
+	To show that $\mathfrak{P}$ is an upper bound for $\Gamma$, let $I \in
+	\Gamma$ be a prime ideal. Then by definition of $\mathfrak{P}$ we have
+	$\mathfrak{P} \subseteq I$, hence $I \leq \mathfrak{P}$.  Zorn's Lemma
+	then guarantees the existence of a maximal element with respect the
+	order $\leq$, and consequently we have shown the existence of a minimal
+	element with respect to set inclusion.
+\end{exercise}  
+
+\begin{exercise}[9]
+	Assume that $\mathfrak{a} = r(\mathfrak{a})$. By proposition 1.14 the
+	radical of any ideal $\mathfrak{a}$ is the intersection of the prime
+	ideals containing $\mathfrak{a}$. It therefore directly follows from
+	our assumption that $\mathfrak{a}$ is an intersection of prime ideals.
+	Assume now that $\mathfrak{a}$ is \emph{not} an intersection of prime
+	ideals. Then it cannot be equal to the radical, as the radical
+	\emph{is} an intersection of prime ideals.
+\end{exercise}
+
+\begin{exercise}[10]
+	Let $A$ be a ring, and $\mathfrak{N}$ its nilradical. We wish to show that the following are equivalent:
+	\begin{enumerate}[(i)]
+		\item $A$ has exactly one prime ideal;
+		\item every element of $A$ is either a unit or nilpotent;
+		\item $A / \mathfrak{N}$ is a field.
+	\end{enumerate}
+	We first show (i) $\implies$ (ii). Assume that $A$ has exactly one
+	prime ideal. Let $x$ be an element in $\mathfrak{N}$. In that case it
+	is nilpotent. Assume therefore that $x$ is not an element in
+	$\mathfrak{N}$. If we further assume that $x$ is \emph{not} a unit,
+	then it is contained in a maximal ideal $\mathfrak{m}$. Since $A$ has
+	exactly one prime ideal, and any maximal ideal is prime, we must have
+	$\mathfrak{m} = \mathfrak{N}$. This contradicts the fact that $x \notin
+	\mathfrak{N}$. Consequently, $x$ must be a unit. So any element $x$ in
+	$A$ is either nilpotent, or a unit.
+
+	We now consider the implication (ii) $\implies$ (iii). Assume that
+	every element of $A$ is either a unit or nilpotent. We seek to show
+	that $A / \mathfrak{N}$ is a field. In principle, we only need to show
+	that $\mathfrak{N}$ is in fact a maximal ideal. Let $\mathfrak{a}$ be
+	an ideal containing $\mathfrak{N}$. We need to show that $\mathfrak{a}
+	= \mathfrak{N}$, or $\mathfrak{a} = A$.
+
+	If $\mathfrak{a} = \mathfrak{N}$, then we are done. Assume therefore
+	that $\mathfrak{a} \neq \mathfrak{N}$. Then there is an element $x \in
+	\mathfrak{N}$ that is not in $\mathfrak{a}$. Then $x$ is \emph{not} a
+	nilpotent element, so by assumption it must be a unit. Since
+	$\mathfrak{a}$ is an ideal containing a unit, we must have
+	$\mathfrak{a} = A$. Hence $\mathfrak{N}$ is maximal and $A /
+	\mathfrak{N}$ is a field.
+
+	We now show the final implication (iii) $\implies$ (i). Assume that $A
+	/ \mathfrak{N}$ is a field. Then $\mathfrak{N}$ is a maximal ideal in
+	$A$. Let $\mathfrak{p}$ be a prime ideal of $A$. Then $\mathfrak{N}
+	\subseteq \mathfrak{p}$. If $\mathfrak{N} = \mathfrak{p}$ we are done.
+	If not, since $\mathfrak{N}$ is maximal, we must have $\mathfrak{p} =
+	A$, hence $A$ contains \emph{exactly} one prime ideal.
+\end{exercise}
+
+\begin{exercise}[11]
+	Let $A$ be a boolean ring (i.e., $x^2 = x$ for all $x \in A$). We want
+	to show that the following properties hold:
+	\begin{enumerate}[(i)]
+		\item $2x = 0$ for all $x \in A$;
+		\item every prime ideal $\mathfrak{p}$ in $A$ is maximal, and
+			$A / \mathfrak{p}$ is a field with two elements; and
+		\item every finitely generated ideal in $A$ is principal.
+	\end{enumerate}
+	For (i), let $x$ be an element in $A$ and let $a$ be the additive
+	inverse of $x$. That is $a + x = x + a = 0$. Multiplying both sides by
+	$x - a$ yield
+	\begin{equation}
+		\notag
+		x^2 - a^2 = 0 \iff x - a = 0 \iff x = a.
+	\end{equation}
+	It then follows that $2x = x + x = x + a = 0$.
+
+	For (ii), note that this is just a special case of exercise 7 with $n =
+	2$ for every $x \in A$, hence any prime ideal $\mathfrak{p}$ is also
+	maximal. It remains to show that $A / \mathfrak{p}$ has two elements.
+	Let $x$ be an element of $A$ and assume that $x \in \mathfrak{p}$. Then
+	$\varphi(x) = 0$ in $A / \mathfrak{p}$. If $x \notin \mathfrak{p}$ then
+	$\varphi{x}$ has an inverse, so it makes sense to look at
+	$\varphi(x)\varphi(x^{-1}) = 1$. Multiplying by $\varphi(x)$ on both
+	sides yields
+	\begin{equation}
+		\notag
+		\varphi(x^2)\varphi(x^{-1}) = \varphi(x)\varphi(x^{-1}) = 1 = \varphi(x).
+	\end{equation}
+	So $\varphi(x) = 1$ in $A / \mathfrak{p}$. Hence, $A / \mathfrak{p} =
+	\left\{0, 1\right\}$, namely the additive and the multiplicative
+	identities.
+\end{exercise}
+
+\begin{exercise}{12}
+	We wish to show that a local ring $A$ has no idempotent element not
+	equal to $0$ or $1$. So, let $x \in A$ be idempotent with $x \neq 0,
+	1$. We consider two cases --- assume first that $x$ is a unit. But
+	then, we have $x = x^{-1}x^2 = x^{-1}x = 1$ which contradicts our
+	initial assumption.
+
+	Assume therefore that $x$ is \emph{not} a unit. By proposition 1.5, we
+	must have $x$ contained in some maximal ideal $\mathfrak{m}$. Since $A$
+	is local, there is only one maximal ideal, hence $x \in \mathfrak{m}
+	\implies x \in \mathfrak{R}$. Since $x$ is in the Jacobson radical, we
+	know that $1 - xy$ is a unit in $A$ for all $y$ in $A$. Consider the
+	fact that $x$ is idempotent, so
+	\begin{equation}
+		\notag
+		x^2 = x \implies x(1 - x) = 0.
+	\end{equation}
+	Since $x \neq 0, 1$ we have that $(1 - x)$ is a zero divisor in $A$,
+	contradicting the fact that it is also a unit.
+
+	Consequently, if $x$ is idempotent, it must be either $0$ or $1$.
+\end{exercise}
+\end{document}

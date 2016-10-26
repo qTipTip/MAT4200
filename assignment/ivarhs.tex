@@ -1,0 +1,263 @@
+\documentclass{article}
+
+\usepackage[]{amsmath, amsthm, amssymb} 
+\usepackage[]{microtype} 
+\usepackage[]{enumitem}
+\usepackage[]{enumerate}
+\usepackage[]{mathtools} 
+\usepackage[usenames, dvipsnames]{color} 
+\usepackage[]{tikz-cd} 
+\setlist[description]{font=\normalfont\space}
+\mathtoolsset{centercolon}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\q}{\mathfrak{q}}
+\newcommand{\tensor}{\otimes}
+\renewcommand{\a}{\mathfrak{a}}
+\renewcommand{\b}{\mathfrak{b}}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Ker}{Ker}
+\title{\textsc{MAT4200 Fall 2016 \\
+Mandatory Assignment}}
+\author{Ivar Haugal{\o}kken Stangeby}
+\date{\small\textbf{Due: Thursday, November 3, 2:00 PM}}
+
+\begin{document}
+    \maketitle     
+    \section*{Problem 1}
+    \label{sec:problem_1}
+    Recall that an element $e$ in a ring $A$ is called \emph{idempotent} if it
+    satisfies $e^2 = e$.
+    \begin{enumerate}[(i)]
+        \item  We wish to characterize the idempotents in the ring $\Z / (p^k)$
+            given a prime $p$ and a positive integer $k$.  Note that any prime
+            ideal in the ring $\Z / (p^k)$ is in one to one correspondence with
+            prime ideals in $\Z$ containing $(p^k)$. There is only one maximal
+            ideal in $\Z$ containing $(p^k)$, and that is $(p)$. Hence, $\Z /
+            (p^k)$ is a local ring. Consequently, the only idempotent elements
+            in $\Z / (p^k)$ is 0 and 1. This amounts to all elements $n \in \Z$
+            such that $n \equiv 0 \pmod{p^k}$ or $n \equiv 1 \pmod{p^k}$.
+        
+        \item We can find the idempotents in $\Z / (12)$ by inspection. Since
+            $\Z / (12) \simeq \Z_{12}$ the idempotent elements are $0, 1, 4$,
+            and $9$. The recurring pattern seems to be, since $12 = 2^2\cdot
+            3$, the idempotent elements are precisely those elements in $n \in
+            \Z$ satisfying $n \equiv 0, 1 \pmod{2^2}$ \emph{and} $n \equiv 0, 1
+            \pmod{3}$.
+
+        \item We wish to find the number of idempotent elements in $\Z / (n)$
+            where $n = \prod_{i=1}^{N} p_i^{n_i}$, $n_i \geq 1$ and the $p_i$
+            are distinct prime numbers. Based on the observation from (ii) we
+            conjecture that the idempotent elements in the ring $\Z / (n)$ are
+            precisely those elements $m \in \Z$ satisfying $m \equiv 0, 1
+            \pmod{p_i^{n_i}}$ for $i = 1, \ldots, N$. 
+
+            The \emph{Chinese Remainder Theorem} tells us that if we have a set
+            of pairwise coprime ideals, then
+            \begin{equation}
+                \notag
+                \Z / ( \cap_{i = 1}^{N} (p_i^{n_i}) ) \simeq \prod_{i = 1}^{N} \Z / (p_i^{n_i}).
+            \end{equation}
+            Note however that the expression on the left involves an
+            intersection of ideals, and not the product of ideals we have
+            given. This can remedied by the fact that since the ideals are
+            pairwise coprime, we have $\bigcap_{i=1}^N (p_i^{n_i}) =
+            \prod_{i=1}^N (p_i^{n_i})$. For an element $(x_1, x_2, \ldots,
+            x_N)$ to be idempotent in the expression on the right we need each
+            $x_i$ idempotent in the corresponding ring. There are two choices
+            of idempotent element for each $x_i$, and there are $N$ choices to
+            be made, so we have $2^N$ idempotent elements in total. Hence,
+            following the isomorphisms, we can conclude that $\Z / (n)$
+            contains $2^N$ idempotent elements.
+
+\end{enumerate} 
+
+    \section*{Problem 2}
+    \label{sec:problem_2}
+        
+    We let $A$ be a ring, $\mathfrak{a}$, $\mathfrak{b}$ ideals in $A$, and
+    $\mathfrak{p}$ a prime ideal. We wish to show that the following statements
+    are equivalent:
+    \begin{enumerate}[(1)]
+        \item $\a \subseteq \p$ or $\b \subseteq \p$;
+        \item $\a \cap \b \subseteq \b$;
+        \item $\a\b \subseteq \p$.
+    \end{enumerate}
+    \begin{proof} 
+        \hfill
+        \begin{description}
+            \item[(1) $\implies$ (2):]\hfill  \\
+                Let $x \in \a\cap\b$.
+                Then $x$ is an element of both $\mathrak{a}$ and
+                $\b$. If $\a \subseteq \p$, then
+                $x \in \p$. Similarly, if $\b \subseteq
+                \p$, then $x \in \p$. In an case,
+                $\a\cap\b \subseteq \p$.
+            \item[(2) $\implies$ (3):]\hfill \\
+                Assume that $\a \cap \b \subseteq \p$. Let $x \in \a\b$. We
+                wish to show that $x \in \p$. By definition of $\a\b$ we know
+                that $x = \sum^{}_{} a_ib_i$ where each $a_i \in \a$ and $b_i
+                \in \b$. Note that each term $a_ib_i$ is in both $\a$ and $\b$
+                as these are ideals. So by assumption, $a_ib_i \in \p$. Since
+                we have a sum of elements in $\p$, it must also lie in $\p$.
+                Hence $x \in \p$.
+            \item[(3) $\implies$ (1):]\hfill \\
+                We prove this contrapositively. Assume that $\a \not\subseteq
+                \p$, $\b \not\subseteq \p$ and choose $x \in \a \smallsetminus
+                \p$, $y \in \b \smallsetminus \p$. Since $\p$ is prime we can
+                use the fact that $x, y \notin \p \implies xy \notin \p$. Now,
+                $xy$ is an element in $\a\b$, but $xy \notin \p$, hence $\a\b
+                \not\subseteq \p$. We have now shown contrapositively that (3)
+                $\implies$ (1).
+        \end{description}
+    \end{proof}
+    
+    \section*{Problem 3}
+    \label{sec:problem_3}
+     
+    For this problem we assume that $A$ is a ring, $B$ an algebra with the
+    structure map $f \colon A \to B$\footnote{I made a slight change in
+    names, calling $A'$ for $B$ instead. Due to simplicity.}. Furthermore,
+    we assume $B$ to be flat as an $A$-module. We recall that $B$ is
+    \emph{faithfully flat} if for every $A$-module $M$, the map $M \to M
+    \tensor_A B$ given by $x \mapsto x \tensor 1$ is injective. We wish to
+    show that the following statements are equivalent:
+
+    \begin{enumerate}[(1)]
+        \item $B$ is faithfully flat;
+        \item every ideal of $A$ is the contraction of its extension, i.e.,
+            $f^{-1}(\a B) = \a$ for every ideal $\a \subseteq A$;
+        \item every prime ideal of $A$ is the contraction of a prime ideal of
+            $B$;
+        \item for every maximal ideal $\m \subset A$, the ideal $\m B$ is
+            different from $B$;
+        \item for any nonzero $A$-module $M$, the module $M \tensor_A B$ is
+            nonzero.
+    \end{enumerate}
+
+    \begin{proof} The plan for the proof is as follows:
+        \begin{equation}
+            \notag
+            \begin{tikzcd}
+                (1) \ar[r, Rightarrow] & (2) \ar[r, Rightarrow] & (3) \ar[r, Rightarrow] & (4) \ar[r, Rightarrow] & (5) \ar[llll, bend left, Rightarrow]\\
+            \end{tikzcd}
+        \end{equation}
+
+        \begin{description}
+            \item[(1) $\implies$ (2):]\hfill \\ We assume $B$ to be
+                faithfully flat. Let $g\colon \a \to \a \tensor_A B$ be
+                the map defined by $x \mapsto x \tensor 1$.  By
+                assumption, since $B$ is faithfully flat, $g$ is
+                injective. We also have an isomorphism $\varphi \colon \a
+                \tensor B \to \a B$ given by $a\tensor b \mapsto ab$. Note
+                that the multiplication takes place in $B$, so by
+                definition, we have $ab \coloneqq f(a)b$ as the only
+                sensible thing to do. We are interested in the function $h
+                \coloneqq \varphi \circ g$ taking elements in $\a$ to
+                elements in $\a B$ as the following diagram illustrates:
+
+            \begin{equation}
+                \notag
+                \begin{tikzcd}
+                    \a \ar[r, "g"] \ar[dr, "h"] & \a \tensor_A B \ar[d, "\varphi"]\\
+                    & \a B
+                \end{tikzcd}
+            \end{equation}
+
+            Taking $a \in \a$ we see that $h(a) = \varphi(g(a)) = \varphi(a
+            \tensor 1) = f(a)$. So $f$ factors through $\varphi$ and $g$. We
+            can therefore consider the contraction of $\a B$ as passing through
+            $g$ and $\varphi$. Consider now $f^{-1}(\a B) = g^{-1}\circ
+            \varphi^{-1} (\a B)$. Now, $\varphi$ is an isomorphism so this
+            equals $g^{-1}(\a \tensor_A B)$ and $g$ is injective, so we get
+            $f^{-1}(\a B) = \a$.
+    
+            \item[(2) $\implies$ (3):]\hfill \\
+                Assume that $f^{-1}(\a B) = \a$ for every ideal $\a$ in $A$.
+                Let $\p$ be a prime ideal in $A$. By assumption, we know that
+                $\p = f^{-1}(\p B)$. By Proposition 3.16, $\p$ is the
+                contraction of a prime ideal of $B$ if and only if $\p^{ec} =
+                \p$. \textcolor{blue}{Give a summary of the proof of
+                Proposition 3.16}.
+
+            \item[(3) $\implies$ (4):]\hfill \\
+                Assume that every prime ideal of $A$ is the contraction of a
+                prime ideal of $B$. Let $\m$ be a maximal ideal of $A$. So, we
+                have $\m = \q^c$ for some prime ideal $\q$ in $B$. We need to
+                show that $\m^e \neq B$. Extending, we see that $\m^e =
+                \q^{ce}$ but $\q^{ce} \subseteq \q$. Since $\q$ is prime, it is
+                properly contained in $B$, hence $\m^e$ is properly contained
+                in $B$. This proves the claim.
+
+            \item [(4) $\implies$ (5):]\hfill \\
+                Assume that for every maximal ideal $\m$ we have $\m B \neq B$.
+                Assume that $M \neq 0$. We wish to show that $M \tensor_A B
+                \neq 0$. We do this by constructing a non-zero submodule of $M
+                \tensor_A B$. Since $M \neq 0$ we chose $x \neq 0$ as an
+                element in $M$. We know that the annihilator $\a \coloneqq
+                \Ann(x)$ has to be a proper ideal of $A$, as $1 \notin \a$.
+                The map $\varphi\colon A \to M$ given by $a \mapsto ax$ have
+                precisely $\a$ as its kernel. This induces an injection from
+                $(A / \a)$ to $M$. By flatness of $B$, we can tensor and
+                preserve injectiveness as the following diagram illustrates:
+                \begin{equation}
+                    \notag
+                    \begin{tikzcd}
+                        (A / \a) \tensor_A B \ar[r, hookrightarrow] \ar[d, "\simeq"] & M \tensor_A B \\
+                        B / \a B \ar[ur, hookrightarrow]
+                    \end{tikzcd}
+                \end{equation}
+                Since $\a$ is an ideal of $A$ and contained in a maximal ideal
+                $\m$, we have that $\a B \subseteq \m B \subset B$, hence $B /
+                \a B \neq 0$, which tells us that $M \tensor_A B \neq 0$.
+
+            \item [(5) $\implies$ (1):]\hfill\\
+                Assume the contrapositive of the hypothesis, namely that
+                $M\tensor_A B = 0 \implies M = 0$. Fix the $A$-module $M$ and
+                let $g: M \to M \tensor B$ given by $x \mapsto x \tensor 1$ be
+                the canonical map. We need to show that $\Ker(g) = 0$.  Since
+                $g$ is an $A$-module homomorphism, $\Ker(g)$ is an $A$ module.
+                We tensor it with $B$ to to obtain $\Ker(g) \tensor_A B$. Let
+                $x \tensor b$ be an element. Since $M \tensor_A B$ is naturally
+                a $B$-module we can write this as $b(x \tensor 1)$, but our $x$
+                lies in $\Ker(g)$ so, $x \tensor 1 = 0$.  Consequently,
+                $\Ker(g) \tensor_A B = 0$. By our assumption, we must have
+                $\Ker(g) = 0$, so $g$ is injective. Since $M$ was arbitrary,
+                $B$ must be faithfully flat.
+        \end{description}
+    \end{proof}
+
+\section*{Problem 4}
+\label{sec:problem_4}
+
+Let $k$ be a field, and let $A \coloneqq k[X, Y, Z]$ be the polynomial
+ring in three variables. Set $\a \coloneqq (XY, X-YZ)$, $\q_1 \coloneqq
+(X, Z)$, and $\q_2 \coloneqq (Y^2, X-YZ)$. We wish to show that $\a = \q_1
+\cap \q_2$ and that this is a minimal primary decomposition of $\a$.
+\begin{proof}
+    We start by showing that $\a \subseteq \q_1 \cap \q_2$. The generator
+    $(XY)$ of $\a$ is contained in the generator $(X)$ of $\q_1$. Taking
+    an element $f(x - yz)$ for $f \in A$ we can write this as $fx - fyz$
+    which is an element of $(X, Z)$.
+\end{proof}
+
+\section*{Problem 5}
+We let $k$ be a field, and $X, Y, Z$ variables. We set
+\begin{equation}
+    \notag
+    A \coloneqq k[X, Y, Z] / (X^2- Y^3 - 1, XZ - 1), 
+\end{equation}
+and let $x, y, z \in A$ be the classes of $X, Y, Z$ in $A$. Fixing $a, b
+\in k$ we set $t \coloneqq x + ay + bz$ and $B \coloneqq k[t] \subseteq
+A$. We wish to show that $x$ and $y$ are integral over $B$ for any $a, b$,
+and that $z$ is integral over $B$ if and only if $b \neq 0$.
+
+In order to gain some insight, we first see what happens if we let $a = b
+= 0$.  Then $t$ reduces to $x$, hence $B = k[x]$. We need to find an
+integral relation of $x$ over $B$, i.e., something of the form
+\begin{equation} \label{eq:int_dep} x^n + a_1x^{n-1} + \ldots a_{n-1}x +
+a_n = 0 \end{equation} where each $a_i \in B$. Taking $a_i = 0$ for $i =
+1, \ldots, n-1$ and $a_n = -x^n$ we get that $x^n - x^n = 0$.
+Consequently, $x$ is integral over $B$ in the case where $a = b = 0$.
+\end{document}

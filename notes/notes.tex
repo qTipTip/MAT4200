@@ -4,12 +4,8 @@
 \usepackage[]{faktor} 
 \usepackage[]{cleveref} 
 \usepackage[]{color} 
-\usepackage[]{eufrak} 
 \usepackage[]{enumerate}
 \usepackage[]{tikz-cd} 
-
-\usepackage{palatino}
-\usepackage{mathpazo}
 
 \usepackage[margin=1.5in]{geometry} 
 \usepackage[]{microtype} 
@@ -18,28 +14,46 @@
 \newtheorem{prop}{Proposition}
 \newtheorem{claim}{Claim}
 \newtheorem*{exercise}{Exercise}
+\newtheorem*{problem}{Problem}
 
 \DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\coker}{coker}
 
+\newcommand{\loc}[2]{#1^{-1}#2}
+\renewcommand{\a}{\mathfrak{a}}
+\renewcommand{\p}{\mathfrak{p}}
+\renewcommand{\m}{\mathfrak{m}}
+\renewcommand{\q}{\mathfrak{q}}
+\renewcommand{\b}{\mathfrak{b}}
+\renewcommand{\rad}[1]{\sqrt{#1}}
+\renewcommand{\Z}{\mathbb{Z}}
 % I want unnumbered sections, while still showing up in table of contents.
 \setcounter{secnumdepth}{0}
 
-\title{Notes MAT4200 --- Commutative Algebra}
+\title{\textsc{Commutative Algebra} \\
+Notes in MAT4200}
 \author{Ivar Stangeby}
 \date{\today}
 
 \begin{document}
+
 \maketitle
 
+\begin{abstract}
+This document contains attempted solutions to the exercises given in the book
+\emph{Introduction to Commutative Algebra} by M. F. Atiyah and I. G. McDonald.
+\textcolor{red}{Text highlighted in red} is meant to signify logical passages
+where I feel I have no idea what I am doing, and the reason for leaving this in
+is to later be able to reflect on the thought process.
+\end{abstract}
 \tableofcontents
 
 \section{Exercises}
 \label{sec:exercises_chapter_1}
 
-\subsection{Chapter 1}
+\subsection{Chapter 1: Rings and ideals}
 \label{sub:chapter_1}
-
-
 
 \begin{exercise}[1]
     Assume that $x$ is nilpotent, and that $1 + x$ is \emph{not} a
@@ -263,16 +277,14 @@
         \notag
         x^2 = x \implies x(1 - x) = 0.
     \end{equation}
-    Since $x \neq 0, 1$ we have that $(1 - x)$ is a zero divisor in
-    $A$, contradicting the fact that it is also a
-    unit.\footnote{Equivalently, since both $x$ and $(1 - x)$ are
-        non-units, they must both lie in a maximal ideal. Since
-        $A$ is local they lie in the same maximal ideal. Since any
-        ideal is an additive subgroup we have that $x + (1 - x) = 1$ lie
-        in the maximal ideal, hence the maximal ideal is the whole thing, $(1)$,
-    which is a contradiction.}
-
-    Consequently, if $x$ is idempotent, it must be either $0$ or $1$.
+    Since $x \neq 0, 1$ we have that $(1 - x)$ is a zero divisor in $A$,
+    contradicting the fact that it is also a unit.\footnote{Equivalently, since
+        both $x$ and $(1 - x)$ are non-units, they must both lie in a maximal
+        ideal. Since $A$ is local they lie in the same maximal ideal. Since any
+    ideal is an additive subgroup we have that $x + (1 - x) = 1$ lie in the
+maximal ideal, hence the maximal ideal is the whole thing, $(1)$, which is a
+contradiction.} Consequently, if $x$ is idempotent, it must be either $0$ or
+$1$.
 \end{exercise}
 \begin{exercise}[15. The prime spectrum of a ring]
     Let $A$ be a ring, and $X$ the set of all prime ideals of $A$. For
@@ -328,7 +340,7 @@
     equality: $V(\mathfrak{a}) = V(\sqrt{\mathfrak{a}})$.
 
     For (ii), note that any prime ideal $\mathfrak{p}$ contains the
-    zerp ideal, so $V(0) = X$. Similarly, by definition, a prime ideal
+    zero ideal, so $V(0) = X$. Similarly, by definition, a prime ideal
     is not equal to $(1)$, so $V(1) = \emptyset$.
 
     For (iii), let $\mathfrak{p} \in V\left(\bigcup_{i \in I}
@@ -341,7 +353,7 @@
     hence $\mathfrak{p} \in V\left(\bigcup_{i \in I} E_i \right)$.
 \end{exercise}
 
-\subsection{Chapter 2}
+\subsection{Chapter 2: Modules}
 \label{sec:chapter_2}
 
 \begin{exercise}[1]
@@ -384,7 +396,7 @@
     \begin{equation}
         \notag
         A \otimes M / \ker(g) \simeq M / \mathfrak{a}M \simeq \left( A /
-        \mathfral{a} \right) \otimes M
+        \mathfrak{a} \right) \otimes M
     \end{equation}
     as we wanted to show.
 \end{exercise}
@@ -423,12 +435,54 @@ is zero. Hence, either $M_k = 0$ or $N_k = 0$.} Therefore, by the above mention
 of Nakayama's lemma, we have either $M = 0$ or $N = 0$.
 \end{exercise}
 
+\begin{exercise}[4]
+    Let $\left\{ M_i \right\}_{i \in I}$ be family of $A$-modules, and let $M =
+    \bigoplus_{i \in I}M_i$.  We wish to show that $M$ being flat is equivalent
+    to each $M_i$ being flat.
+    
+    Assume that each $M_i$ is flat. Then by definition, if
+    \[
+        \begin{tikzcd}
+            0 \arrow[r] & N' \arrow[r, "f"] & N \arrow[r, "g"] & N'' \arrow[r] & 0
+        \end{tikzcd}
+    \]
+    is an exact sequence, then 
+    \[
+        \begin{tikzcd}
+            0 \arrow[r] & N'\otimes M_i \arrow[r, "f_i"] & N \otimes M_i\arrow[r, "g _i"] & N''\otimes M_i \arrow[r]& 0
+        \end{tikzcd}
+    \] is an exact sequence. Let $\varphi \colon \bigoplus (N' \otimes M_i) \to
+    \bigoplus (N \otimes M_i)$ be defined by
+    \begin{equation}
+        \notag
+        \varphi(x) = \left( f_1(x_1), f_2(x_2), \ldots \right)
+    \end{equation}
+    and $\psi \colon \bigoplus (N \otimes M_i) \to \bigoplus (N'' \otimes M_i)$
+    be defined by 
+    \begin{equation}
+        \notag
+        \psi(y) = \left( g_1(y_1), g_2(y_2), \ldots \right).
+    \end{equation}
+    By the injectivity of each $f_i$ and the surjectivity of each $g_i$ we have
+    that $\varphi$ is injective and $\psi$ surjective. Hence the sequence
+    \[
+        \begin{tikzcd}
+            0 \arrow[r] & N' \otimes M \arrow[r, "\varphi"] & N \otimes M \arrow[r, "\psi"] & N'' \otimes M \arrow[r] & 0 
+        \end{tikzcd}
+    \]
+    is exact. To show that $M$ flat implies $M_i$ flat, we argue by
+    contradiction. Assuming $M$ flat implies that the above short sequence is
+    exact. That is $\varphi$ and $\psi$ are injective and surjective
+    respectively. If one of the $M_i$'s were not flat, this would contradict
+    the fact that $\varphi$ is injective, or that $\psi$ is surjective.
+    Consequently all the $M_i$'s must be flat.
+\end{exercise}
 \begin{exercise}[5]
     We let $A[x]$ be the ring of polynomials over the indeterminate $x$. We
     wish to show that $A[x]$ is a flat $A$-algebra. We proceed accordingly:
     \begin{enumerate}
         \item Show that $A$ is a flat $A$-module;
-        \item show that $M_i \eqdef Ax^i \simeq A$;
+        \item show that $M_i = Ax^i \simeq A$;
         \item show that $\bigoplus_i M_i = A[x]$;
         \item apply exercise 2.4.
     \end{enumerate}
@@ -438,7 +492,8 @@ of Nakayama's lemma, we have either $M = 0$ or $N = 0$.
     \to 0$ be an exact sequence of $A$-modules. Tensoring yields
     \[
     \begin{tikzcd}
-        0 \arrow[r] & M'\otimes A \arrow[r]\arrow[d, "\simeq"] & M\otimes A \arrow[r]\arrow[d, "\simeq"] & M''\otimes A \arrow[r] \arrow[d, "\simeq"] & 0 \\
+        0 \arrow[r] & M'\otimes A \arrow[r]\arrow[d, "\simeq"] &
+        M\otimes A \arrow[r]\arrow[d, "\simeq"] & M''\otimes A \arrow[r] \arrow[d, "\simeq"] & 0 \\
         0 \arrow[r] & M' \arrow[r] & M \arrow[r] & M'' \arrow[r] & 0
     \end{tikzcd}
     \]
@@ -454,4 +509,305 @@ of Nakayama's lemma, we have either $M = 0$ or $N = 0$.
     Applying exercise 2.4, we know that since each $M_i$ is flat, that $A[x]$
     is flat. 
 \end{exercise}
+
+\begin{exercise}[7]
+    Let $\mathfrak{p}$ be a prime ideal in a ring $A$. We want to show that
+    $\mathfrak{p}[x]$ is a prime ideal in $A[x]$. We can do this by showing
+    that $A[x] / \mathfrak{p}[x]$ is an integral domain. Consider the canonical
+    homomorphism
+    \begin{equation}
+        \notag
+        \phi : A[x] \to \left(A / \mathfrak{p}\right)[x].
+    \end{equation}
+    This is surjective with kernel $\mathfrak{p}[x]$. Hence by the first
+    isomorphism theorem for modules we have
+    \begin{equation}
+        \notag
+        A[x] / \mathfrak{p}[x] \simeq \left( A / \mathfrak{p} \right)[x].
+    \end{equation}
+    Since $A / \mathfrak{p}$ is an integral domain, the polynomial ring with
+    coefficients in this integral domain must be an integral domain. Hence,
+    $\mathfrak{p}[x]$ is a prime ideal in $A[x]$.  This implication does not
+    hold if we replace \emph{prime} with \emph{maximal}. Take for instance the
+    maximal ideal $2\mathbb{Z}$ in $\mathbb{Z}$. The quotient $\mathbb{Z} /
+    2\mathbb{Z}$ is a field. However, $x \in
+    \left(\mathbb{Z}/2\mathbb{Z}\right)[x]$ does \emph{not} have a
+    multiplicative inverse.
+\end{exercise}
+
+\begin{exercise}[8]
+    We want to show the following:
+    \begin{enumerate}[i)]
+        \item If $M$ and $N$ are $A$-flat, then so is $M \otimes_A N$;
+        \item If $B$ is a flat $A$-algebra and $N$ is a flat $B$-module, then
+            $N$ is $A$-flat as an $A$-module.
+    \end{enumerate}
+    Consider first $M$,$N$ as $A$-flat modules. Using the isomorphism from
+    proposition 2.14(ii). Then tensoring any exact sequence by $M \otimes_A N$
+    keeps the sequence exact as $M$ and $N$ are flat.
+    
+    For (ii) we want to use the injectivity characterization of flatness. Let
+    $\varphi$ be any injective map from $M'$ to $M$, with $M$, $M'$ both being
+    $A$-modules. Since $B$ is a flat $A$-module we know that 
+    \begin{equation}
+        \notag
+        \varphi \otimes \id_B \colon M' \otimes_A B \to M \otimes_A B
+    \end{equation}
+    is injective. We know by assumption that $N$ is a flat $B$-module, so 
+    the map
+    \begin{equation}
+        \notag
+        \left( \varphi \otimes \id_B \right) \otimes \id_N \colon \left(M'
+        \otimes_A B \right) \otimes_B N \to \left( M \otimes_A B \right)
+        \otimes_B N
+    \end{equation}
+    is injective and this makes sense when regarding $M \otimes_A B$ as a
+    $B$-module (by exercise 2.15). By proposition 2.14(iv) this is
+    isomorphic to
+    \begin{equation}
+        \notag
+        \left( \varphi \otimes \id_B \right) \otimes \id_N \colon M' \otimes_A N \to M \otimes_A N.
+    \end{equation}
+    This map is the map we want as the following diagram commutes:
+    \[
+        \begin{tikzcd}
+            (m' \otimes_A b) \otimes_B n \ar[rr]\ar[d] & &\left( \varphi(m') \otimes_A b\right) \otimes_B n \ar[d] \\
+            m' \otimes_A (b \otimes_B n) \ar[d] & \circlearrowleft & \varphi(m') \otimes_A (b \otimes_B n) \ar[d] \\
+            m' \otimes_A bn \ar[rr] & & \varphi(m')\otimes_A bn
+        \end{tikzcd}
+    \]
+    This map being injective means that $N$ is flat as an $A$-module.
+\end{exercise}
+
+\begin{exercise}[8]
+    We want to show that if $M''$ and $M'$ are finitely generated and $0 \to M'
+    \to M \to M'' \to 0$ is exact, then it follows that $M$ is finitely
+    generated. We show the special case that $M'$ is a submodule of $M$ and
+    that $M'' = M / M'$. Let $M'$ have generating set $\left\{ x_i \right\}$
+    and $M''$ generating set $\left\{ y_i \right\}$.
+\end{exercise}
+
+\begin{exercise}[10]
+    Let $A$ be a ring, $\mathfrak{a}$ an ideal contained in the Jacobson
+    radical $\mathfrak{R}$. Let $M$ be an $A$-module and $N$ a finitely
+    generated $A$-module. We want to show that $u \colon M \to N$ is
+    surjective if the induced map $v \colon M /\mathfrak{a}M \to N
+    /\mathfrak{a}N$ is surjective. Seeing the words \emph{finitely
+    generated} and \emph{Jacobson radical} we want to apply Nakayama's
+    lemma.
+    
+    Consider $\coker(u) = N / \im{u}$. If we can show this to be zero,
+    then $\im{u} = u(M) = N$ so $u$ is surjective. Tensoring the exact
+    sequence $M \to N \to \coker(u) \to 0$ with $(A/\mathfrak{a})$ yields
+    \begin{equation}
+        \notag
+        \begin{tikzcd}
+            M \otimes (A / \mathfrak{a}) \ar[r, "u\otimes \id"] \ar[d, "\simeq"] & N \otimes (A / \mathfrak{a}) \ar[r]  \ar[d, "\simeq"]& \coker(u) \otimes (A / \mathfrak{a}) \ar[r] \ar[d, "\simeq"] & 0 \\
+            M / \mathfrak{a}M \ar[r, "v"] & N / \mathfrak{a}N \ar[r] & \coker(u) / \mathfrak{a}\coker(u) \ar[r] & 0
+        \end{tikzcd}
+    \end{equation}
+    The fact that $u\otimes \id = g$ took a while to figure out, but it
+    happens in the abstract nonsense from exercise 2.2. Consequently
+    $\coker(u) = \mathfrak{a}\coker(u)$, and since $\coker(u)$ is finitely
+    generated and $\mathfrak{a}$ is contained in $\mathfrak{R}$, it
+    follows from Nakayama's lemma that $\coker(u) = 0$ which implies that
+    $u(M) = N$, hence $u$ is surjective.
+
+    \textcolor{blue}{An equivalent proof using a corollary of Nakayama is way
+    easier.} Consider the composition $f\colon M \to M/\mathfrak{a}M \to
+    N/\mathfrak{a}N$. This is surjective by assumption. We now examine the
+    image of $f$ in two different ways. First of all we have $\im(f) = N / \a
+    N$ using the surjectivity. We also have that $\im(f) = \im(u)/\a N$. Now,
+    since we are modding out by $\a N$, we can simply add the submodule $\a N$
+    to obtain $\im(f) = (\im(u) + \a N) / \a N$ in order to get something on
+    the form of Nakayama. So we have $N / \a N = (\im(u) + \a N) / \a N$, so $N
+    = \im(u) + \a N)$. By corollary 2.7 we have that $\im(u) = N$ hence $u$ is
+    surjective.
+\end{exercise}
+
+\subsection{Chapter 3: Rings and modules of fractions}
+\label{sub:chapter_3}
+
+\begin{exercise}[1]
+    Given a ring $A$, a multiplicatively closed subset $S$ of $A$ and a
+    finitely generated $A$-module $M$, we want to show that $S^{-1}M = 0$ if and
+    only if there exists an $s \in S$ such that $sM = 0$.
+
+    Let $M$ have generators $x_1, \ldots, x_n$. Assume first that $S^{-1}M = 0$.
+    This means that $m / s = 0 / 1$ in $S^{-1}M$ for all $m \in M, s \in S$. This
+    in turn, means that by definition there exists $t$ in $S$ such that $tm =
+    0$ in $M$. In particular, let $t_i$ be the element such that $tx_i = 0$,
+    i.e., an element of $S$ that kills one of the generating elements of $M$.
+    Since $S$ is multiplicatively closed, take $t' = t_1t_2\ldots t_n$. Then
+    $t'$ kills all generators of $M$. Hence, $t'm = t' \sum^{}_{} a_i x_i = 0$
+    and consequently, $t'M = 0$.
+
+    For the converse, assume that there exist an $s \in S$ such that $sM = 0$.
+    Consider the element $m / 1$ in $S^{-1}M$. Then
+    \begin{equation}
+        \notag
+        \frac{m}{1} = \frac{sm}{s} = \frac{0}{s} = \frac{0}{1},
+    \end{equation}
+    so any element $m / 1$ in $S^{-1}M$ is zero, hence $S^{-1}M = 0$.
+\end{exercise}
+
+\begin{exercise}[2]
+    Let $\mathfrak{a}$ be an ideal of a ring $A$. Furthermore, let $S = 1 +
+    \mathfrak{a}$. We want to show that $\loc{S}{\mathfrak{a}}$ is contained in
+    the Jacobson radical $\mathfrak{R}$ of $\loc{S}{A}$.
+
+    We first show that $S$ is infact a multiplicatively closed subset of $A$.
+    We first require $1$ to be in $S$, but since $0$ is contained in any ideal,
+    we have $1 + 0 = 1 \in S$. Taking two elements $(1 + a)$ and $(1 + b)$ in
+    $S$ we see that $(1 + a + b + ab)$ is in $S$ as $\mathfrak{a}$ is an ideal.
+    Consequently, $S$ is a mulitplicative set.
+
+    In order to check whether $\loc{S}{\mathfrak{a}}$ is contained in the
+    Jacobson, we pick an element $x$ in $\loc{S}{\mathfrak{a}}$ and show that
+    $1 - xy$ is a unit in $\loc{S}{A}$ for all $y$ in $\loc{S}{A}$. We have that
+    \begin{equation}
+        \notag
+        1 - xy = \frac{1}{1} - \frac{aa'}{(1 + b)(1 + b')} = \frac{(1 + b)(1 + b') - aa'}{(1 + b)(1 + b')}
+    \end{equation}
+    the numerator is on the form $(1 + a'')$ where $a''$ is in $\mathfrak{a}$,
+    and the denominator is on the form $(1 + b'')$ with $b''$ in
+    $\mathfrak{a}$. Consequently, both numerator and denominator are units in
+    $\loc{S}{A}$, so $1 - xy$ is a unit.
+
+    We now wish to use this fact along with Nakayama's lemma in order to prove
+    corollary 2.5 without the use of determinants. So, let $M$ be finitely
+    generated with $\mathfrak{a}$ an ideal such that $\mathfrak{a}M = M$.
+    We localize in $S = 1 + \mathfrak{a}$ which yields
+    \begin{equation}
+        \notag
+        \loc{S}{M} = \loc{S}{\mathfrak{a}M} = \left(\loc{S}{\mathfrak{a}}\left)\left( \loc{S}{M} \right).
+    \end{equation}
+    Now, from the previous result we know that $\loc{S}{\mathfrak{a}}$ is
+    contained in $\mathfrak{R}$. Since we also have that $\loc{S}{M}$ is
+    finitely generated, due to $M$ being finitely generated, we can conclude
+    from Nakayama's lemma that $\loc{S}{M} = 0$. By exercise 1 we know that
+    this holds if and only if there exist an $s \in S$ such that $sM = 0$.
+    This $s$ is on the form $s = 1 + a$ for some $a$ in $\mathfrak{a}$, hence
+    $s \equiv 1 \pmod{\mathfrak{a}}$.
+\end{exercise}
+
+\begin{exercise}[3]
+    Let $A$ be a ring, and let $S$ and $T$ be two multiplicatively closed
+    subsets of $A$. Let $U$ be the image of $T$ in $\loc{S}{A}$. We want to
+    show that the rings $\loc{(ST)}{A}$ and $\loc{U}{\left( \loc{S}{A}
+    \right)}$ are isomorphic. For brevity, we shall call these rings $B$ and
+    $C$ respectively. We let $f$ be the only sensible choice of map between
+    these two sets and show that it is a bijection. That is $f \colon
+    \loc{(ST)}{A} \to \loc{U}{\left( \loc{S}{A} \right)}$ defined by
+    \begin{equation}
+        \notag
+        f\left(a / (st)\right)  = (a / s) / (t / 1).
+    \end{equation}
+
+    We first show that $f$ is well defined. Take $a / (st) = a' / (s't')$ and
+    consider the image of these two elements. We need to find a $u$ in $C$ such
+    that $u \left( at' / s \right) = u \left( ta' / s' \right)$. But, by
+    assumption there exists a $u'$ in $B$ such that $u'as't' = u'a'st$, so we
+    can chose $u = u' / 1$. Consequently, $f$ is a well defined map.
+
+    We now need to show that $f$ is a bijection. We see immediately that it is
+    surjective, since any element on the form $(a / s) / (t / 1)$ comes from an
+    element on the form $a / (st)$ with $a \in A$ and $st \in ST$. To see that
+    it is injective, take an element $a / (st)$ in the kernel of $f$. Then $(a
+    / s)/(t / 1) = (0/1) / (1 / 1)$, so there is a $u$ such that
+    \begin{align*}
+        u\left((a / s)(1 / 1) -  (t / 1)(0 / 1)\right) = 0,
+    \end{align*}
+    so $u(a / s) - (0 / 1) = 0$, but this means that $a / st = 0$ in $B$. So
+    $f$ is injective. It remains to show that $f$ is a ring homomorphism. 
+\end{exercise}
+
+\subsection{Chapter 4: Primary Decomposition}
+\label{sub:chapter_4_primary_decomposition}
+
+\begin{exercise}[2]
+    We wish to show that if an ideal $\a$ satisfies $\rad{\a} = \a$, then it
+    has no embedded prime ideals. Since we are dealing with ideals having a
+    minimal primary decomposition, we this be
+    \begin{equation}
+        \notag
+        \a = \bigcap_{i=1}^n \q_i.
+    \end{equation}
+    We denote the radical $\rad{\q_i}$ by $\p_i$. Now, since $\a = \rad{a}$, we
+    know that $\a = \bigcap \p_j$ where $p_j$ is a prime ideal containing $\a$.
+    Taking radicals we get that, on one hand,
+    \begin{equation}
+        \notag
+        \a = \rad{\a} = \rad{\bigcap \p_j} = \bigcap \rad{\p_j} = \bigcap \rad{\p_j} = \bigcap \p_j,
+    \end{equation}
+    while on the other, 
+    \begin{equation}
+        \notag
+        \rad{\a} = \bigcap_{i=1}^n \rad{q_i} = \bigcap_{i=1}^n
+        p_i.
+    \end{equation}
+    \textcolor{red}{I now need to properly figure out exactly \emph{why} this
+    means that none of the prime ideals belonging to $\a$ are embedded.}
+\end{exercise}
+
+\begin{exercise}[4]
+    We consider the polynomial ring $\Z[t]$. We want to show that the ideal
+    $\mathfrak{m} = (2, t)$ is maximal, and that the ideal $\q = (4, t)$ is
+    $\m$ primary, but \emph{not} a power of $\m$.  Note first that the quotient
+    $\Z[t] / \m$ consists of all constant polynomials where the constant is
+    either 0 or 1. Hence, this is isomorphic to the field $\Z_2$. Consequently,
+    $\m$ is maximal. In order to show that $\q$ is $\m$ primary, we first show
+    that all the zero-divisors in $\Z[t] / \q$ are nilpotent, and then show
+    that the radical $\q$ is equal to $\m$. The quotient $\Z[t] / \q$ is
+    isomorphic to $\Z_4$, and consists therefore only of constant polynomials
+    where the constant is either 0, 1, 2 or 3. The only zero-divisor in $\Z_4$
+    is 2, and this is also nilpotent, as $2^2 = 0$. Consequently, $\q$ is
+    primary. Consider now $\rad{\q}$:
+    \begin{equation}
+        \notag
+        \rad{\q} = \rad{(4, t)} = \rad{(4) + (t)} = \rad{\rad{(4)} + \rad{(t)}} = \rad{(2) + (t)} = (2) + (t)
+    \end{equation}
+    since $(2) + (t)$ is maximal (and therefore also prime). This shows that
+    $\q$ is $\m$-primary.  \textcolor{red}{It remains to show that $\q$ is
+    \emph{not} a power of of $\m$.}
+\end{exercise}
+
+\begin{exercise}[5]
+        
+\end{exercise}
+
+\section{Problem Sheet}
+\label{sec:problem_sheet}
+\begin{problem}[1]
+    We let $M$ be an $A$ module, and let $N$ be a submodule of $M$. We define
+    the radical of $N$ in $M$ as
+    \begin{equation}
+        \notag
+        r_M(N) = \left\{ x \in A \mid x^n \subseteq N \text{ for some } n > 0\right\}.
+    \end{equation}
+    \begin{enumerate}[a)]
+        \item We first want to show that $r_M(N) = \rad{(N : M)}$. Recall that
+            $(N  : M)$ is the set of all $x \in A$ that multiplies $M$ into
+            $N$. Let $x \in r_M(N)$. Then $x^n m \in N$ for all $m \in M$.
+            Hence $x^n \in (N  : M)$, so $x \in \rad{(N : M)}$.  Conversely,
+            let $x \in \rad{(N:M)}$, then $x^n \in (N:M)$, so $x^nM \subseteq
+            N$, hence $x \in r_M(N)$.
+        \item We now wish to show that $(Q : M)$ is a primary ideal in $A$
+            under the assumption that $Q$ is primary in $M$ as a module. Let
+            $ab \in (Q : M)$, and assume in addition that $a \notin (Q : M)$.
+            We need to show that $b^n \in (Q : M)$ for some $n > 0$. By
+            assumption, $a \notin (Q : M)$ tells us that there is some element
+            $m' \in M$ such that $am' \notin Q$. We know in addition, that
+            $bam' \in Q$ since $ab \in (Q : M)$. 
+
+            Consider now the map $\varphi_b : M \to M$ given by $\varphi_b(x) =
+            xb$.  We have for the element $am' \notin Q$ that $\varphi_b(am')$
+            is in $Q$. Hence, in the quotient $M / Q$, we map a non-zero
+            element to a zero element, so the induced map $\bar{\varphi_b}$ has
+            non-zero kernel, hence not injective. This means that $\bar{b}$ is
+            a zero-divisor in $M / Q$, and consequently, since $Q$ is primary
+            in $M$, $b$ is nilpotent. This means that there is an $n > 0$, such
+            that $\varphi(b)^n = 0$, hence $b^nm \in Q$ for all $m$. We can
+            therefore conclude that $b^n \in (Q : M)$.
+\end{problem} 
 \end{document}

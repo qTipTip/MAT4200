@@ -231,15 +231,40 @@ Mandatory Assignment}}
 \section*{Problem 4}
 \label{sec:problem_4}
 
-Let $k$ be a field, and let $A \coloneqq k[X, Y, Z]$ be the polynomial
-ring in three variables. Set $\a \coloneqq (XY, X-YZ)$, $\q_1 \coloneqq
-(X, Z)$, and $\q_2 \coloneqq (Y^2, X-YZ)$. We wish to show that $\a = \q_1
+Let $k$ be a field, and let $A \coloneqq k[x, y, z]$ be the polynomial
+ring in three variables. Set $\a \coloneqq (xy, x-yz)$, $\q_1 \coloneqq
+(x, z)$, and $\q_2 \coloneqq (y^2, x-yz)$. We wish to show that $\a = \q_1
 \cap \q_2$ and that this is a minimal primary decomposition of $\a$.
 \begin{proof}
-    We start by showing that $\a \subseteq \q_1 \cap \q_2$. The generator
-    $(XY)$ of $\a$ is contained in the generator $(X)$ of $\q_1$. Taking
-    an element $f(x - yz)$ for $f \in A$ we can write this as $fx - fyz$
-    which is an element of $(X, Z)$.
+    We start by showing the inclusion $\q_1 \cap \q_2 \subseteq \a$. Let $f \in
+    \q_1 \cap \q_2$. We can then write $f = ax + az = cy^2 + d(x - yz)$ for $a,
+    b, c, d \in A$.  Rearranging we see that $x(a - d) = cy^2 - bz - dyz$. From
+    this equality we can conclude that $x | cy^2 - bz - dyz$. In particular,
+    $x$ divides $c$, so $c = c'x$ for some $c' \in A$. Substituting, we can
+    write $f = c'xy^2 + d(x - yz)$ which is a linear combination of the
+    generators of $\a$. We can therefore conclude that $f \in \a$.
+
+    Conversely, to show $\a \subseteq \q_1 \cap \q_2$ we can consider the
+    generators of $\a$. If we can show that they lie in the intersection, then
+    so must any linear combination of the two. Consider first the generator
+    $xy$ of $\a$. We see immediately that $xy \in \q_1$. Similarly, the
+    generator $x - yz$ is a linear combination of $x$ and $z$, hence lies in
+    $\q_1$. Since it also lies in $\q_2$ as a generator, it remains to show
+    that $xy$ lies in $\q_2$. In other words, we need to write $xy = ay^2 + b(x
+    - yz)$ for some $a, b \in A$. Taking $a = z$ and $b = y$ we get $zy^2 + yx
+    - y^2z$ which equals $xy$. Hence $xy \in \q_2$. Since both generators of
+    $\a$ lie in $\q_1 \cap \q_2$ we can conclude that $\a \subseteq \q_1 \cap
+    \q_2$.
+
+    We now show that both $\q_1$ and $\q_2$ are primary ideals. Consider the
+    quotient $A / \q_1$. This is isomorphic to $k[y]$, and since $k$ is a
+    field, this is an integral domain. Hence $k[y]$ contains no zero divisors,
+    so vacuously, all zero divisors are nilpotent. Hence $\q_1$ is primary.
+    Equivalently, note that modding out by $\q_1$ yields an integral domain,
+    hence $\q_1$ is prime and any prime ideal is primary.
+    
+    Consider now the quotient $A / \q_2$. Let $\bar{x}, \bar{y}$ and $\bar{z}$
+    denote the equivalence classes.
 \end{proof}
 
 \section*{Problem 5}

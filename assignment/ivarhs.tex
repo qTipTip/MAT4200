@@ -2,8 +2,8 @@
 
 \usepackage[]{amsmath, amsthm, amssymb} 
 \usepackage[]{microtype} 
-\usepackage[]{enumitem}
 \usepackage[]{enumerate}
+\usepackage[shortlabels]{enumitem}
 \usepackage[]{mathtools} 
 \usepackage[usenames, dvipsnames]{color} 
 \usepackage[]{tikz-cd} 
@@ -16,8 +16,10 @@
 \newcommand{\tensor}{\otimes}
 \renewcommand{\a}{\mathfrak{a}}
 \renewcommand{\b}{\mathfrak{b}}
+\newcommand{\rad}[1]{\sqrt{#1}}
 \DeclareMathOperator{\Ann}{Ann}
 \DeclareMathOperator{\Ker}{Ker}
+
 \title{\textsc{MAT4200 Fall 2016 \\
 Mandatory Assignment}}
 \author{Ivar Haugal{\o}kken Stangeby}
@@ -70,7 +72,6 @@ Mandatory Assignment}}
             be made, so we have $2^N$ idempotent elements in total. Hence,
             following the isomorphisms, we can conclude that $\Z / (n)$
             contains $2^N$ idempotent elements.
-
 \end{enumerate} 
 
     \section*{Problem 2}
@@ -89,7 +90,7 @@ Mandatory Assignment}}
         \begin{description}
             \item[(1) $\implies$ (2):]\hfill  \\
                 Let $x \in \a\cap\b$.
-                Then $x$ is an element of both $\mathrak{a}$ and
+                Then $x$ is an element of both $\mathfrak{a}$ and
                 $\b$. If $\a \subseteq \p$, then
                 $x \in \p$. Similarly, if $\b \subseteq
                 \p$, then $x \in \p$. In an case,
@@ -178,8 +179,7 @@ Mandatory Assignment}}
                 Let $\p$ be a prime ideal in $A$. By assumption, we know that
                 $\p = f^{-1}(\p B)$. By Proposition 3.16, $\p$ is the
                 contraction of a prime ideal of $B$ if and only if $\p^{ec} =
-                \p$. \textcolor{blue}{Give a summary of the proof of
-                Proposition 3.16}.
+                \p$.
 
             \item[(3) $\implies$ (4):]\hfill \\
                 Assume that every prime ideal of $A$ is the contraction of a
@@ -264,7 +264,21 @@ ring in three variables. Set $\a \coloneqq (xy, x-yz)$, $\q_1 \coloneqq
     hence $\q_1$ is prime and any prime ideal is primary.
     
     Consider now the quotient $A / \q_2$. Let $\bar{x}, \bar{y}$ and $\bar{z}$
-    denote the equivalence classes.
+    denote the equivalence classes. Modding $A$ out by $(x-yz)$ yields
+    $k[\bar{y}\bar{z}, \bar{y}, \bar{z}]$. This ring is equal to $k[\bar{y},
+    \bar{z}]$. Modding out by $(y^2)$ yields $A / \q_2 = k[\bar{y}, \bar{z}] /
+    (y^2)$. It remains to show that all zero-divisors here are nilpotent
+    elements. The only way for two non-zero elements $f, g \in A/\q_2$ to
+    multiply to $0$ is if $y$ divides both $f$ and $g$. In other words, both
+    $f$ and $g$ are nilpotent, hence $\q_2$ is a primary ideal.
+    
+    Furthermore, we have that $y^2 \in \q_1$ but $y^2 \notin \q_1$ and $z \in
+    \q_1$ but $z \notin \q_2$. The radicals are distinct, as
+    \begin{align*}
+        \notag
+        \rad{(x, z)} = (x,z) \text{ and } \rad{(y^2, x - yz)} = (y, x - yz),
+    \end{align*}
+    hence $\q_1\cap\q_2$ is a minimal primary decomposition of $\a$.
 \end{proof}
 
 \section*{Problem 5}
@@ -273,16 +287,45 @@ We let $k$ be a field, and $X, Y, Z$ variables. We set
     \notag
     A \coloneqq k[X, Y, Z] / (X^2- Y^3 - 1, XZ - 1), 
 \end{equation}
-and let $x, y, z \in A$ be the classes of $X, Y, Z$ in $A$. Fixing $a, b
-\in k$ we set $t \coloneqq x + ay + bz$ and $B \coloneqq k[t] \subseteq
-A$. We wish to show that $x$ and $y$ are integral over $B$ for any $a, b$,
-and that $z$ is integral over $B$ if and only if $b \neq 0$.
+and let $x, y, z \in A$ be the classes of $X, Y, Z$ in $A$. Fixing $a, b \in k$
+we set $t \coloneqq x + ay + bz$ and $B \coloneqq k[t] \subseteq A$. We wish to
+show that $x$ and $y$ are integral over $B$ for any $a, b$, and that $z$ is
+integral over $B$ if and only if $b \neq 0$.
 
-In order to gain some insight, we first see what happens if we let $a = b
-= 0$.  Then $t$ reduces to $x$, hence $B = k[x]$. We need to find an
-integral relation of $x$ over $B$, i.e., something of the form
-\begin{equation} \label{eq:int_dep} x^n + a_1x^{n-1} + \ldots a_{n-1}x +
-a_n = 0 \end{equation} where each $a_i \in B$. Taking $a_i = 0$ for $i =
-1, \ldots, n-1$ and $a_n = -x^n$ we get that $x^n - x^n = 0$.
-Consequently, $x$ is integral over $B$ in the case where $a = b = 0$.
+Note first, that in the quotient $A$, we have that $xz = 1$ and that $y^3 = x^2
+- 1$. Our goal is to manipulate the expression for $t$ in such a way that we
+get rid of $y$ and $z$ and end up with an integral dependence relation for $x$
+over $B$. Multiplying the equation for $t$ by $x$ yields $tx = x^2 + ayx + b$
+where the $z$ is gone. Rearrange to get $x^2 + tx + b = ayx$. We now need to
+get rid of $y$, and we do this by cubing both sides. This gives us
+\begin{equation}
+    \notag
+    (x^2 - tx + b)^3 + a^3x^3(x^2 - 1) = 0
+\end{equation}
+which we recognize as an integral dependence relation for $x$ over $B$. Note
+that all coefficients are in $B$, namely $a, b$ and $t$. If we now can show
+that $y$ is integral over $B[x]$, then it follows by transistivity that $y$ is
+integral over $B$. Since $y^3 = x^2 - 1$, we can rearrange to get an integral
+dependence relation for $y$ over $B[x]$, namely $y^3 - x^2 + 1 = 0$. So, $y$ is
+integral over $B[x]$, and therefore also integral over $B$.
+
+To show that $z$ is integral over $B$ if and only if $b \neq 0$, we first
+assume that $b\neq 0$. We then get the integral dependence relation for $z$
+over $B[x, y]$, namely $z + (a y + x - t) / b = 0$. By transitivity, $z$ is
+integral over $B$. Conversely, to show that $z$ integral over $B$ implies $b
+\neq 0$, we assume for contradiction that $z$ is integral over $B$ and that $b
+= 0$. The contradiction we want relies on the fact that $k[x]$ is integrally
+closed in its field of fractions $k(x)$. We wish to show that $z$ is an element
+of $k[x]$ by showing that $z$ is integral over $k[x]$. Note first that $z \in
+k(x)$ as $z = 1 / x$. 
+
+With $a$ arbitrary and $b = 0$, $t$ reduces to $x + ay$, hence our ring $B$ is
+contained in the ring $k[x, y]$. Under the assumption that $z$ is integral over
+$B$, it must also be integral over $k[x, y]$ using the same dependence
+relation. Futhermore, $y$ is integral over $k[x]$ as $y^3 - x^2 + 1 = 0$.
+Consequently, $z$ is integral over $k[x]$. But, now, since $z \in k(x)$ and $z$
+integral over $k[x]$, we must have $z \in k[x]$. This means that $1 / x \in
+k[x]$, which is the contradiction we wanted. Hence $z$ is integral over $B$ if
+and only if $b \neq 0$.
+ 
 \end{document}

@@ -292,40 +292,41 @@ we set $t \coloneqq x + ay + bz$ and $B \coloneqq k[t] \subseteq A$. We wish to
 show that $x$ and $y$ are integral over $B$ for any $a, b$, and that $z$ is
 integral over $B$ if and only if $b \neq 0$.
 
-Note first, that in the quotient $A$, we have that $xz = 1$ and that $y^3 = x^2
-- 1$. Our goal is to manipulate the expression for $t$ in such a way that we
-get rid of $y$ and $z$ and end up with an integral dependence relation for $x$
-over $B$. Multiplying the equation for $t$ by $x$ yields $tx = x^2 + ayx + b$
-where the $z$ is gone. Rearrange to get $x^2 + tx + b = ayx$. We now need to
-get rid of $y$, and we do this by cubing both sides. This gives us
-\begin{equation}
-    \notag
-    (x^2 - tx + b)^3 + a^3x^3(x^2 - 1) = 0
-\end{equation}
-which we recognize as an integral dependence relation for $x$ over $B$. Note
-that all coefficients are in $B$, namely $a, b$ and $t$. If we now can show
-that $y$ is integral over $B[x]$, then it follows by transitivity that $y$ is
-integral over $B$. Since $y^3 = x^2 - 1$, we can rearrange to get an integral
-dependence relation for $y$ over $B[x]$, namely $y^3 - x^2 + 1 = 0$. So, $y$ is
-integral over $B[x]$, and therefore also integral over $B$.
+\begin{proof}
+    Note first, that in the quotient $A$, we have that $xz = 1$ and that $y^3 = x^2
+    - 1$. Our goal is to manipulate the expression for $t$ in such a way that we
+    get rid of $y$ and $z$ and end up with an integral dependence relation for $x$
+    over $B$. Multiplying the equation for $t$ by $x$ yields $tx = x^2 + ayx + b$
+    where the $z$ is gone. Rearrange to get $x^2 + tx + b = ayx$. We now need to
+    get rid of $y$, and we do this by cubing both sides. This gives us
+    \begin{equation}
+        \notag
+        (x^2 - tx + b)^3 + a^3x^3(x^2 - 1) = 0
+    \end{equation}
+    which we recognize as an integral dependence relation for $x$ over $B$. Note
+    that all coefficients are in $B$, namely $a, b$ and $t$. If we now can show
+    that $y$ is integral over $B[x]$, then it follows by transitivity that $y$ is
+    integral over $B$. Since $y^3 = x^2 - 1$, we can rearrange to get an integral
+    dependence relation for $y$ over $B[x]$, namely $y^3 - x^2 + 1 = 0$. So, $y$ is
+    integral over $B[x]$, and therefore also integral over $B$.
 
-To show that $z$ is integral over $B$ if and only if $b \neq 0$, we first
-assume that $b\neq 0$. We then get the integral dependence relation for $z$
-over $B[x, y]$, namely $z + (a y + x - t) / b = 0$. By transitivity, $z$ is
-integral over $B$. Conversely, to show that $z$ integral over $B$ implies $b
-\neq 0$, we assume for contradiction that $z$ is integral over $B$ and that $b
-= 0$. The contradiction we want relies on the fact that $k[x]$ is integrally
-closed in its field of fractions $k(x)$. We wish to show that $z$ is an element
-of $k[x]$ by showing that $z$ is integral over $k[x]$. Note first that $z \in
-k(x)$ as $z = 1 / x$. 
+    To show that $z$ is integral over $B$ if and only if $b \neq 0$, we first
+    assume that $b\neq 0$. We then get the integral dependence relation for $z$
+    over $B[x, y]$, namely $z + (a y + x - t) / b = 0$. By transitivity, $z$ is
+    integral over $B$. Conversely, to show that $z$ integral over $B$ implies $b
+    \neq 0$, we assume for contradiction that $z$ is integral over $B$ and that $b
+    = 0$. The contradiction we want relies on the fact that $k[x]$ is integrally
+    closed in its field of fractions $k(x)$. We wish to show that $z$ is an element
+    of $k[x]$ by showing that $z$ is integral over $k[x]$. Note first that $z \in
+    k(x)$ as $z = 1 / x$. 
 
-With $a$ arbitrary and $b = 0$, $t$ reduces to $x + ay$, hence our ring $B$ is
-contained in the ring $k[x, y]$. Under the assumption that $z$ is integral over
-$B$, it must also be integral over $k[x, y]$ using the same dependence
-relation. Furthermore, $y$ is integral over $k[x]$ as $y^3 - x^2 + 1 = 0$.
-Consequently, $z$ is integral over $k[x]$. But, now, since $z \in k(x)$ and $z$
-integral over $k[x]$, we must have $z \in k[x]$. This means that $1 / x \in
-k[x]$, which is the contradiction we wanted. Hence $z$ is integral over $B$ if
-and only if $b \neq 0$.
- 
+    With $a$ arbitrary and $b = 0$, $t$ reduces to $x + ay$, hence our ring $B$ is
+    contained in the ring $k[x, y]$. Under the assumption that $z$ is integral over
+    $B$, it must also be integral over $k[x, y]$ using the same dependence
+    relation. Furthermore, $y$ is integral over $k[x]$ as $y^3 - x^2 + 1 = 0$.
+    Consequently, $z$ is integral over $k[x]$. But, now, since $z \in k(x)$ and $z$
+    integral over $k[x]$, we must have $z \in k[x]$. This means that $1 / x \in
+    k[x]$, which is the contradiction we wanted. Hence $z$ is integral over $B$ if
+    and only if $b \neq 0$.
+\end{proof}     
 \end{document}

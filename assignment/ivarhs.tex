@@ -82,7 +82,7 @@ Mandatory Assignment}}
     are equivalent:
     \begin{enumerate}[(1)]
         \item $\a \subseteq \p$ or $\b \subseteq \p$;
-        \item $\a \cap \b \subseteq \b$;
+        \item $\a \cap \b \subseteq \p$;
         \item $\a\b \subseteq \p$.
     \end{enumerate}
     \begin{proof} 
@@ -118,12 +118,12 @@ Mandatory Assignment}}
     \label{sec:problem_3}
      
     For this problem we assume that $A$ is a ring, $B$ an algebra with the
-    structure map $f \colon A \to B$\footnote{I made a slight change in
-    names, calling $A'$ for $B$ instead. Due to simplicity.}. Furthermore,
-    we assume $B$ to be flat as an $A$-module. We recall that $B$ is
-    \emph{faithfully flat} if for every $A$-module $M$, the map $M \to M
-    \tensor_A B$ given by $x \mapsto x \tensor 1$ is injective. We wish to
-    show that the following statements are equivalent:
+    structure map $f \colon A \to B$\footnote{I let $B \coloneqq A'$ to not get
+    confused by the names.}. Furthermore, we assume $B$ to be flat as an
+    $A$-module. We recall that $B$ is \emph{faithfully flat} if for every
+    $A$-module $M$, the map $M \to M \tensor_A B$ given by $x \mapsto x \tensor
+    1$ is injective. We wish to show that the following statements are
+    equivalent:
 
     \begin{enumerate}[(1)]
         \item $B$ is faithfully flat;
@@ -146,23 +146,22 @@ Mandatory Assignment}}
         \end{equation}
 
         \begin{description}
-            \item[(1) $\implies$ (2):]\hfill \\ We assume $B$ to be
-                faithfully flat. Let $g\colon \a \to \a \tensor_A B$ be
-                the map defined by $x \mapsto x \tensor 1$.  By
-                assumption, since $B$ is faithfully flat, $g$ is
-                injective. We also have an isomorphism $\varphi \colon \a
-                \tensor B \to \a B$ given by $a\tensor b \mapsto ab$. Note
-                that the multiplication takes place in $B$, so by
-                definition, we have $ab \coloneqq f(a)b$ as the only
-                sensible thing to do. We are interested in the function $h
-                \coloneqq \varphi \circ g$ taking elements in $\a$ to
-                elements in $\a B$ as the following diagram illustrates:
-
+            \item[(1) $\implies$ (2):]\hfill \\ We assume $B$ to be faithfully
+                flat. Let $g\colon \a \to \a \tensor_A B$ be the map defined by
+                $x \mapsto x \tensor 1$.  By assumption, since $B$ is
+                faithfully flat, $g$ is injective. We also have an isomorphism
+                $\varphi \colon \a \tensor B \to \a B$ given by $a\tensor b
+                \mapsto ab$ by flatness of $B$. Note that the multiplication
+                takes place in $B$, so by definition, we have $ab \coloneqq
+                f(a)b$ as the only sensible thing to do. We are interested in
+                the function $h \coloneqq \varphi \circ g$ taking elements in
+                $\a$ to elements in $\a B$ as the following diagram
+                illustrates:
             \begin{equation}
                 \notag
                 \begin{tikzcd}
-                    \a \ar[r, "g"] \ar[dr, "h"] & \a \tensor_A B \ar[d, "\varphi"]\\
-                    & \a B
+                    \a \ar[r, "g"] \ar[dr, "h"] & \a \tensor_A B \ar[d, "\varphi"] \ar[r, hookrightarrow] & A \tensor_A B \ar[d, "\varphi"]\\
+                    & \a B \ar[r, hookrightarrow] & B
                 \end{tikzcd}
             \end{equation}
 
@@ -219,12 +218,12 @@ Mandatory Assignment}}
                 the canonical map. We need to show that $\Ker(g) = 0$.  Since
                 $g$ is an $A$-module homomorphism, $\Ker(g)$ is an $A$ module.
                 We tensor it with $B$ to to obtain $\Ker(g) \tensor_A B$. Let
-                $x \tensor b$ be an element. Since $M \tensor_A B$ is naturally
-                a $B$-module we can write this as $b(x \tensor 1)$, but our $x$
-                lies in $\Ker(g)$ so, $x \tensor 1 = 0$.  Consequently,
-                $\Ker(g) \tensor_A B = 0$. By our assumption, we must have
-                $\Ker(g) = 0$, so $g$ is injective. Since $M$ was arbitrary,
-                $B$ must be faithfully flat.
+                $\sum a_i \tensor b_i$ be an element. Since $M \tensor_A B$ is
+                naturally a $B$-module we can write each term as $b_i(a_i
+                \tensor 1)$, but our $a_i$ lies in $\Ker(g)$ so, $a_i \tensor 1
+                = 0$.  Consequently, $\Ker(g) \tensor_A B = 0$. By our
+                assumption, we must have $\Ker(g) = 0$, so $g$ is injective.
+                Since $M$ was arbitrary, $B$ must be faithfully flat.
         \end{description}
     \end{proof}
 
@@ -293,40 +292,34 @@ show that $x$ and $y$ are integral over $B$ for any $a, b$, and that $z$ is
 integral over $B$ if and only if $b \neq 0$.
 
 \begin{proof}
-    Note first, that in the quotient $A$, we have that $xz = 1$ and that $y^3 = x^2
-    - 1$. Our goal is to manipulate the expression for $t$ in such a way that we
-    get rid of $y$ and $z$ and end up with an integral dependence relation for $x$
-    over $B$. Multiplying the equation for $t$ by $x$ yields $tx = x^2 + ayx + b$
-    where the $z$ is gone. Rearrange to get $x^2 + tx + b = ayx$. We now need to
-    get rid of $y$, and we do this by cubing both sides. This gives us
+    Note first, that in the quotient $A$, we have that $xz = 1$ and that $y^3 =
+    x^2 - 1$. Multiplying the equation for $t$ by $x$ yields $x^2 + tx + b =
+    ayx$. We now need to get rid of $y$, and we do this by cubing both sides.
+    This gives us
     \begin{equation}
         \notag
         (x^2 - tx + b)^3 + a^3x^3(x^2 - 1) = 0
     \end{equation}
-    which we recognize as an integral dependence relation for $x$ over $B$. Note
-    that all coefficients are in $B$, namely $a, b$ and $t$. If we now can show
-    that $y$ is integral over $B[x]$, then it follows by transitivity that $y$ is
-    integral over $B$. Since $y^3 = x^2 - 1$, we can rearrange to get an integral
-    dependence relation for $y$ over $B[x]$, namely $y^3 - x^2 + 1 = 0$. So, $y$ is
-    integral over $B[x]$, and therefore also integral over $B$.
+    which we recognize as an integral dependence relation for $x$ over $B$.
+    Since $y^3 - x^2 + 1 = 0$, $y$ is integral over $B[x]$, it is by
+    transitivity also integral over $B$. 
 
     To show that $z$ is integral over $B$ if and only if $b \neq 0$, we first
     assume that $b\neq 0$. We then get the integral dependence relation for $z$
     over $B[x, y]$, namely $z + (a y + x - t) / b = 0$. By transitivity, $z$ is
-    integral over $B$. Conversely, to show that $z$ integral over $B$ implies $b
-    \neq 0$, we assume for contradiction that $z$ is integral over $B$ and that $b
-    = 0$. The contradiction we want relies on the fact that $k[x]$ is integrally
-    closed in its field of fractions $k(x)$. We wish to show that $z$ is an element
-    of $k[x]$ by showing that $z$ is integral over $k[x]$. Note first that $z \in
-    k(x)$ as $z = 1 / x$. 
+    integral over $B$. Conversely, to show that $z$ integral over $B$ implies
+    $b \neq 0$, we assume for contradiction that $z$ is integral over $B$ and
+    that $b = 0$. Note first that $z \in k(x)$ as $z = 1 / x$.  We wish to show
+    that $z$ is an element of $k[x]$ by showing that $z$ is integral over
+    $k[x]$. 
 
-    With $a$ arbitrary and $b = 0$, $t$ reduces to $x + ay$, hence our ring $B$ is
-    contained in the ring $k[x, y]$. Under the assumption that $z$ is integral over
-    $B$, it must also be integral over $k[x, y]$ using the same dependence
-    relation. Furthermore, $y$ is integral over $k[x]$ as $y^3 - x^2 + 1 = 0$.
-    Consequently, $z$ is integral over $k[x]$. But, now, since $z \in k(x)$ and $z$
-    integral over $k[x]$, we must have $z \in k[x]$. This means that $1 / x \in
-    k[x]$, which is the contradiction we wanted. Hence $z$ is integral over $B$ if
-    and only if $b \neq 0$.
+    As $t = x + ay$, $B \subseteq k[x, y]$. Under the assumption that $z$ is
+    integral over $B$, it must also be integral over $k[x, y]$ using the same
+    dependence relation.  Furthermore, $y$ is integral over $k[x]$ as $y^3 -
+    x^2 + 1 = 0$.  Consequently, $z$ is integral over $k[x]$. But, now, since
+    $z \in k(x)$ and $z$ integral over $k[x]$, we must have $z \in k[x]$ as
+    $k[x]$ is integrally closed in its field of fractions. This means that $1 /
+    x \in k[x]$, which is the contradiction we wanted. Hence $z$ is integral
+    over $B$ if and only if $b \neq 0$.
 \end{proof}     
 \end{document}
